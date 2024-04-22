@@ -3,31 +3,67 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --primary-black:#1E1E1E;
+  --primary-white:#E3E3E3;
+  --accents:#003366F2;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  @apply box-border text-base p-0 m-0
 }
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.heading{
+  color: var(--primary-black);
+  font-family: "Roboto Mono";
+  font-size: 2.75rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.875rem;
+  letter-spacing: -0.1375rem;
 }
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.sub-heading{
+  color: var(--primary-black);
+  font-family: Asap;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+.body{
+  color: var(--primary-black);
+  font-family: "Source Sans Pro";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.01rem;
+}
+.primary-btn{
+  display: flex;
+  padding: 1rem 1.75rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  background-color:var(--primary-black);
+  border-radius: 0.3125rem;
+}
+.secondary-btn{
+  display: flex;
+  padding: 1rem 1.75rem;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem;
+  background-color:var(--accents);
+  border-radius: 0.3125rem;
+}
+.btn-text{
+  color: var(--primary-white,);
+  font-family: "Source Sans Pro";
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 1.5rem;
+  text-transform: uppercase;
+}
+a::hover {
+  cursor:pointer;
 }
