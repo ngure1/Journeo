@@ -1,12 +1,12 @@
-import React from 'react'
-import Logo from './Logo'
+import React from "react";
+import Logo from "./Logo";
 
 const Header = () => {
   return (
     <nav>
-      <Logo/>
+      <Logo />
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
