@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
 
-// const inter = Inter({ subsets: ["latin"] });
+import "./globals.css";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "JOURNEO",
@@ -16,7 +15,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body >{children}</body>
+      
+      <body >
+        < Header/>
+        
+        {children}
+        
+      </body>
     </html>
   );
 }
