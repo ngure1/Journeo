@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  --primary-black:#1E1E1E;
-  --primary-white:#E3E3E3;
-  --accents:#003366F2;
+  --primary-black: #1e1e1e;
+  --primary-white: #e3e3e3;
+  --accents: #003366f2;
 }
 
 * {
-  @apply box-border text-base p-0 m-0
+  @apply box-border text-base p-0 m-0;
 }
-.heading{
+.heading {
   color: var(--primary-black);
   font-family: "Roboto Mono";
   font-size: 2.75rem;
@@ -20,7 +20,7 @@
   line-height: 2.875rem;
   letter-spacing: -0.1375rem;
 }
-.sub-heading{
+.sub-heading {
   color: var(--primary-black);
   font-family: Asap;
   font-size: 1.25rem;
@@ -28,7 +28,7 @@
   font-weight: 500;
   line-height: 1.5rem;
 }
-.body{
+.body {
   color: var(--primary-black);
   font-family: "Source Sans Pro";
   font-size: 1rem;
@@ -37,26 +37,26 @@
   line-height: normal;
   letter-spacing: -0.01rem;
 }
-.primary-btn{
+.primary-btn {
   display: flex;
   padding: 1rem 1.75rem;
   justify-content: center;
   align-items: center;
   gap: 0.625rem;
-  background-color:var(--primary-black);
+  background-color: var(--primary-black);
   border-radius: 0.3125rem;
 }
-.secondary-btn{
+.secondary-btn {
   display: flex;
   padding: 1rem 1.75rem;
   justify-content: center;
   align-items: center;
   gap: 0.625rem;
-  background-color:var(--accents);
+  background-color: var(--accents);
   border-radius: 0.3125rem;
 }
-.btn-text{
-  color: var(--primary-white,);
+.btn-text {
+  color: var(--primary-white);
   font-family: "Source Sans Pro";
   font-size: 1.25rem;
   font-style: normal;
@@ -65,5 +65,26 @@
   text-transform: uppercase;
 }
 a::hover {
-  cursor:pointer;
+  cursor: pointer;
+}
+.input-div {
+  display: flex;
+  width: 21.875rem;
+  height: 3.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 0.25rem 0.25rem 0rem 0rem;
+}
+input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.625rem;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 0.25rem;
+  border: 1px solid var(--M3-sys-light-outline, #70787d);
+}
+
+input::focus {
 }
