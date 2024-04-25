@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+// import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -39,7 +39,7 @@ const SignUp = () => {
   }
 
   // TODO remove, this demo shouldn't need to reset the theme.
-  const defaultTheme = createTheme();
+  // const defaultTheme = createTheme();
   const [open, setOpen] = useState(false);
   const [addUser, { data }] = useUsersMutation();
   const router = useRouter();
@@ -104,9 +104,9 @@ const SignUp = () => {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    // <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         <Snackbar 
           open={open} 
           autoHideDuration={10000} 
@@ -259,7 +259,7 @@ const SignUp = () => {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 };
 export default SignUp;

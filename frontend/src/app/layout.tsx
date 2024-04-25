@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 
 import { MyProvider } from "@/redux/provider";
+import MyThemeProvider from "@/components/MyThemeProvider";
 
 export const metadata: Metadata = {
   title: "JOURNEO",
@@ -18,11 +19,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <MyProvider>
-        <body>
-          <Header />
+        <MyThemeProvider>
+          <body>
+            <Header />
 
-          {children}
-        </body>
+            {children}
+          </body>
+        </MyThemeProvider>
       </MyProvider>
     </html>
   );
