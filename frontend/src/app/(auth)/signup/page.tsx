@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -11,9 +12,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import Snackbar from "@mui/material/Snackbar";
+import { Alert } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useUsersMutation } from "@/redux/features/user/userApi";
 import type { signUpDetails } from "@/types";
+
 
 const SignUp = () => {
   function Copyright(props: any) {
@@ -36,8 +40,25 @@ const SignUp = () => {
 
   // TODO remove, this demo shouldn't need to reset the theme.
   const defaultTheme = createTheme();
-
+  const [open, setOpen] = useState(false);
   const [addUser, { data }] = useUsersMutation();
+  const router = useRouter();
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const [formErrors,setFormErrors] = useState({
+    firstNameError:false,
+    lastNameError:false,
+    usernameError:false,
+    emailError:false,
+    emailFormatError:false,
+    passwordError:false,
+    rePasswordError:false,
+    passwordMismatchError:false,
+  })
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,21 +73,33 @@ const SignUp = () => {
       re_password: data.get("rePassword") as string,
     };
 
-    try {
-      await addUser(signUpDetails);
-      // const response = await fetch("http://localhost:/8000/users/", {
-      //   method: "POST",
-      //   headers: {
-      //     "content-type": "applicaion/json",
-      //   },
-      //   body: JSON.stringify(signUpDetails),
-      // });
-      // if (response.ok) {
-      //   console.log(response);
-      // }
-      console.log(data)
-    } catch (error) {
-      console.warn(error);
+    const newFormErrors = {
+      firstNameError: !signUpDetails.first_name,
+      lastNameError: !signUpDetails.last_name,
+      usernameError: !signUpDetails.username,
+      emailError: !signUpDetails.email ,
+      emailFormatError:!emailRegex.test(signUpDetails.email),
+      passwordError: !signUpDetails.password,
+      rePasswordError: !signUpDetails.re_password,
+      passwordMismatchError: signUpDetails.password !== signUpDetails.re_password,
+    };
+    setFormErrors(newFormErrors)
+    const hasErrors = Object.values(formErrors).some(error => error);
+
+    if(!hasErrors){
+      try {
+        const response = await addUser(signUpDetails).unwrap();
+        console.log(response)
+
+        // TODO: come back and change this to response.ok
+        if (response.id) {
+          setOpen(true);
+        } else {
+          console.log(response);
+        }
+      } catch (error) {
+        // console.log(error.data);
+      }
     }
   };
 
@@ -74,6 +107,21 @@ const SignUp = () => {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        <Snackbar 
+          open={open} 
+          autoHideDuration={10000} 
+          onClose={handleClose} 
+          anchorOrigin={{vertical:"top",horizontal: "center"}}
+        >
+          <Alert
+            onClose={handleClose}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            Account created successfully check your for email an account activation link
+          </Alert>
+        </Snackbar>
         <Box
           sx={{
             marginTop: 8,
@@ -104,6 +152,11 @@ const SignUp = () => {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  error={formErrors.firstNameError}
+                  helperText={
+                    formErrors.firstNameError
+                    ? "First Name is required" : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -114,6 +167,11 @@ const SignUp = () => {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  error={formErrors.lastNameError}
+                  helperText={
+                    formErrors.lastNameError
+                    ? "Last Name is required" : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -123,6 +181,11 @@ const SignUp = () => {
                   id="username"
                   label="Username"
                   name="username"
+                  error={formErrors.usernameError}
+                  helperText={
+                    formErrors.usernameError
+                    ? "Username is required" : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -133,6 +196,13 @@ const SignUp = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  error={formErrors.emailError || formErrors.emailFormatError}
+                  helperText= {
+                    formErrors.emailError 
+                    ? "Email is required"
+                    : formErrors.emailFormatError
+                    ? "Email is invalid" : ""
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -144,6 +214,12 @@ const SignUp = () => {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  error={formErrors.passwordError || formErrors.passwordMismatchError}
+                  helperText={
+                    formErrors.passwordError
+                    ? "Password is required"
+                    : formErrors.passwordMismatchError ? "Passwords did not match" : ""
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -155,6 +231,12 @@ const SignUp = () => {
                   type="password"
                   id="rePassword"
                   autoComplete="new-password"
+                  error={formErrors.rePasswordError || formErrors.passwordMismatchError}
+                  helperText={
+                    formErrors.passwordError
+                    ? "Confirm Password is required"
+                    : formErrors.passwordMismatchError ? "Passwords did not match" : ""
+                  }
                 />
               </Grid>
             </Grid>
