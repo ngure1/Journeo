@@ -1,15 +1,21 @@
 import { baseApi } from "../baseApi";
+import type { signUpDetails } from "@/types";
 
 const headers = {
   Authorization: "Bearer your_access_token_here",
 };
 
+
 const usersApi = baseApi.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
-    users: builder.mutation({
+    users: builder.mutation<any,signUpDetails>({
       query: (signUpDetails) => ({
         url: "users/",
         method: "POST",
+        headers:{
+          'Content-Type':'application/json'
+        },
         body: JSON.stringify(signUpDetails),
       }),
     }),
