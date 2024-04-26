@@ -5,16 +5,15 @@ const headers = {
   Authorization: "Bearer your_access_token_here",
 };
 
-
 const usersApi = baseApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    users: builder.mutation<any,signUpDetails>({
+    users: builder.mutation<any, signUpDetails>({
       query: (signUpDetails) => ({
         url: "users/",
         method: "POST",
-        headers:{
-          'Content-Type':'application/json'
+        headers: {
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(signUpDetails),
       }),
@@ -23,6 +22,9 @@ const usersApi = baseApi.injectEndpoints({
       query: (uidToken) => ({
         url: "users/activation/",
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(uidToken),
       }),
     }),
@@ -30,6 +32,9 @@ const usersApi = baseApi.injectEndpoints({
       query: (email) => ({
         url: "users/resend_activation/",
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(email),
       }),
     }),
@@ -37,6 +42,9 @@ const usersApi = baseApi.injectEndpoints({
       query: (email) => ({
         url: "users/reset_password/",
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(email),
       }),
     }),
@@ -44,6 +52,9 @@ const usersApi = baseApi.injectEndpoints({
       query: (args) => ({
         url: "users/reset_password_confirm/",
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(args),
       }),
     }),
