@@ -71,11 +71,15 @@ REST_FRAMEWORK = {
 #djoser
 DJOSER = {
     'SEND_ACTIVATION_EMAIL': True,
-    'ACTIVATION_URL': '/activate/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
     'USER_CREATE_PASSWORD_RETYPE':True,
-    'PASSWORD_RESET_CONFIRM_URL': '/password/reset/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/{uid}/{token}',
     'PASSWORD_RESET_CONFIRM_RETYPE':True,
 }
+
+# redirections settings
+DOMAIN = 'localhost:3000'
+SITE_NAME = 'Journeo'
 #simplejwt
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
