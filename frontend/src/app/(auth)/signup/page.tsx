@@ -3,7 +3,6 @@ import * as React from "react";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -11,11 +10,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-// import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useUsersMutation } from "@/redux/features/user/userApi";
+import { useUsersMutation,useUsersResendActivationMutation } from "@/redux/features/user/userApi";
 import type { signUpDetails } from "@/types";
 
 
@@ -38,13 +36,16 @@ const SignUp = () => {
     );
   }
 
-  // TODO remove, this demo shouldn't need to reset the theme.
-  // const defaultTheme = createTheme();
+  const [isResendSucess,setIsResendSuccess] = useState(false)
   const [open, setOpen] = useState(false);
-  const [addUser, { data }] = useUsersMutation();
   const router = useRouter();
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+  
+  //* mutation functions
+  const [addUser] = useUsersMutation();
+  const [ resendActivationEmail ] = useUsersResendActivationMutation();
+  const [signUpDetails,setSignupDetails] = useState<signUpDetails>()
+  
   const [formErrors,setFormErrors] = useState({
     firstNameError:false,
     lastNameError:false,
@@ -72,6 +73,9 @@ const SignUp = () => {
       password: data.get("password") as string,
       re_password: data.get("rePassword") as string,
     };
+    setSignupDetails({
+      ...signUpDetails
+    })
 
     const newFormErrors = {
       firstNameError: !signUpDetails.first_name,
@@ -103,11 +107,27 @@ const SignUp = () => {
     }
   };
 
+  const resendEmail = () => {
+    const email = {
+      email: signUpDetails?.email
+    }
+    const response = resendActivationEmail(email).unwrap()
+    .then((res) =>{
+      if(res === null){
+        setOpen(true)
+        setIsResendSuccess(true)
+      }
+    })
+    .catch((err) =>{
+      console.log(err)
+    })
+  }
+
   return (
     // <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
-        {/* <CssBaseline /> */}
-        <Snackbar 
+        { !isResendSucess &&
+          <Snackbar 
           open={open} 
           autoHideDuration={10000} 
           onClose={handleClose} 
@@ -121,7 +141,7 @@ const SignUp = () => {
           >
             Account created successfully check your for email an account activation link
           </Alert>
-        </Snackbar>
+        </Snackbar>}
         <Box
           sx={{
             marginTop: 8,
@@ -255,6 +275,40 @@ const SignUp = () => {
                 </Link>
               </Grid>
             </Grid>
+            <div className="flex flex-col gap-0 mt-1">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  align="right"
+                >
+                  Didn't receive an email?
+                </Typography>
+                <Button
+                  fullWidth
+                  onClick={resendEmail}
+                  variant="outlined"
+                  sx={{ mt: 0, mb: 2 }}
+                >
+                  Resend Email
+                </Button>
+                { isResendSucess &&
+                <Snackbar
+                  open={open} 
+                  autoHideDuration={10000} 
+                  onClose={handleClose} 
+                  anchorOrigin={{vertical:"top",horizontal: "center"}}
+                >
+                  <Alert
+                    onClose={handleClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                  >
+                    Activation Link sent successfully
+                  </Alert>
+                  </Snackbar>
+                }
+            </div>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
