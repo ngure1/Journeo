@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 
 import { MyProvider } from "@/redux/provider";
 import MyThemeProvider from "@/components/MyThemeProvider";
+import { ProtectRoutes } from "@/utils/ProtectRoutes";
 
 export const metadata: Metadata = {
   title: "JOURNEO",
@@ -21,10 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <MyProvider>
           <body>
-            <Header />
+              {/* <Header /> */}
 
-            {children}
-          </body>
+              {children}
+            </body>
       </MyProvider>
     </html>
     </MyThemeProvider>

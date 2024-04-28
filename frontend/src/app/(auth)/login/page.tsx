@@ -15,6 +15,9 @@ import Container from "@mui/material/Container";
 import { useJwtCreateMutation } from "@/redux/features/auth/authApi";
 import { useRouter } from "next/navigation";
 
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { setIsAuthenticated } from "@/redux/features/auth/authSlice";
 
 function Copyright(props: any) {
   return (
@@ -38,6 +41,8 @@ const Login = () => {
   const router = useRouter();
   const [login] = useJwtCreateMutation();
 
+  const dispatch = useDispatch();
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -45,15 +50,17 @@ const Login = () => {
       email: data.get("email") as string,
       password: data.get("password") as string,
     };
-    try {
-      const response = await login(loginDetails).unwrap();
-      if (response.ok) {
-        router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
+    const isAuthenticated = useSelector( (state : RootState) => state.auth.isAuthenticated)
+      const response = login(loginDetails).unwrap()
+      .then((res) =>{
+        console.log(res)
+        dispatch(setIsAuthenticated(true))
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+
     }
-  };
 
   return (
     <Container component="main" maxWidth="xs">
