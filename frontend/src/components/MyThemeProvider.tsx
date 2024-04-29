@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import * as React from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { createTheme, ThemeProvider } from "@mui/material/styles";

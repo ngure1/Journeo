@@ -1,7 +1,7 @@
     // src/form-component/FormInputText.tsx
     import { Controller,Control } from "react-hook-form";
-    import TextField from "@mui/material/TextField";
     import type { FormInputProps } from "./FormInputProps";
+    import { TextField } from '@mui/material';
     export  const FormInputText = ({ name, control, label,size,variant, }: FormInputProps) => {
     return (
         <Controller

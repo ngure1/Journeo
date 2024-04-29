@@ -1,10 +1,8 @@
-"use client";
+"use client";;
 import React, { useEffect, useState } from "react";
-import CircularProgress from "@mui/material/CircularProgress";
 import { Typography } from "@mui/material";
 import { useUsersActivationMutation } from "@/redux/features/user/userApi";
-import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
+import { Alert, CircularProgress, Snackbar } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 const Activate = ({ params }: { params: { uid: string; token: string } }) => {
@@ -114,4 +112,4 @@ const Activate = ({ params }: { params: { uid: string; token: string } }) => {
     );
     };
 
-    export default Activate;
+export default Activate;

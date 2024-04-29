@@ -1,17 +1,19 @@
-"use client";
+"use client";;
 import * as React from "react";
 import { useState } from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Snackbar from "@mui/material/Snackbar";
-import { Alert } from "@mui/material";
+import {
+  Alert,
+  Avatar,
+  Button,
+  TextField,
+  Link,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Snackbar,
+} from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useUsersMutation,useUsersResendActivationMutation } from "@/redux/features/user/userApi";
 import type { signUpDetails } from "@/types";
